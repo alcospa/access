@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- GA -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXX"></script>
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-gtag('config', 'G-XXXX');
+gtag('config', 'G-DYS49TX66K'); // ←ここを自分のGA4測定IDに変更
 </script>
 
 <title>LP</title>
@@ -34,10 +34,9 @@ img {
 
 <script>
 const params = new URLSearchParams(location.search);
-const set = params.get("set") || "a";
+const set = params.get("set") || "a"; // デフォルトa
 
-const total = 12; // ←画像枚数
-
+const total = 12; // 画像枚数
 const app = document.getElementById("app");
 
 for (let i = 1; i <= total; i++) {
@@ -47,10 +46,13 @@ for (let i = 1; i <= total; i++) {
   app.appendChild(img);
 }
 
-// 来場イベント（ページ表示時）
-gtag('event', 'visit_complete', {
-  set: set
-});
+// 来場イベント（2秒後に送信して誤クリック防止）
+setTimeout(() => {
+  gtag('event', 'visit_complete', {
+    event_category: 'conversion', // カテゴリ
+    event_label: set          // a/b/c/d パターン
+  });
+}, 2000);
 </script>
 
 </body>

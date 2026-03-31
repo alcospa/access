@@ -33,10 +33,15 @@ img {
 <div id="app"></div>
 
 <script>
+<script>
 const params = new URLSearchParams(location.search);
 const set = params.get("set") || "a"; // デフォルトa
 
-const total = 14; // 画像枚数
+// セットごとに画像枚数を設定
+let total;
+if(set === "a" || set === "b") total = 14;
+else if(set === "c" || set === "d") total = 13;
+
 const app = document.getElementById("app");
 
 for (let i = 1; i <= total; i++) {
@@ -46,14 +51,11 @@ for (let i = 1; i <= total; i++) {
   app.appendChild(img);
 }
 
-// 来場イベント（2秒後に送信して誤クリック防止）
+// 来場イベント（1秒後に送信）
 setTimeout(() => {
   gtag('event', 'visit_complete', {
-    event_category: 'conversion', // カテゴリ
-    event_label: set          // a/b/c/d パターン
+    event_category: 'conversion',
+    event_label: set
   });
 }, 1000);
 </script>
-
-</body>
-</html>

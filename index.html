@@ -10,7 +10,7 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-gtag('config', 'G-DYS49TX66K');
+gtag('config', 'G-DYS49TX66K'); // 自分のGA4測定IDに変更済み
 </script>
 
 <title>LP</title>
@@ -44,10 +44,10 @@ else if(set === "c" || set === "d") total = 13;
 
 const app = document.getElementById("app");
 
-// 画像を追加
+// 画像を追加（絶対パス）
 for (let i = 1; i <= total; i++) {
   const img = document.createElement("img");
-  img.src = `./img/${set}/${i}.webp`;
+  img.src = `https://alcospa.github.io/access/img/${set}/${i}.webp`;
   img.loading = "lazy";
   app.appendChild(img);
 }

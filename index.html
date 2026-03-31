@@ -55,8 +55,7 @@ for (let i = 1; i <= total; i++) {
 // 来場イベント（1秒後に送信）
 setTimeout(() => {
   gtag('event', 'visit_complete', {
-    event_category: 'conversion',
-    event_label: set
+    conversion_set: set   // ← GA4向けのカスタムパラメータ
   });
 }, 1000);
 </script>

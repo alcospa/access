@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- GA -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXX"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-XXXX');
+</script>
+
+<title>LP</title>
+
+<style>
+body {
+  margin: 0;
+  background: #000;
+}
+img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+</style>
+</head>
+
+<body>
+
+<div id="app"></div>
+
+<script>
+const params = new URLSearchParams(location.search);
+const set = params.get("set") || "a";
+
+const total = 12; // ←画像枚数
+
+const app = document.getElementById("app");
+
+for (let i = 1; i <= total; i++) {
+  const img = document.createElement("img");
+  img.src = `./img/${set}/${i}.webp`;
+  img.loading = "lazy";
+  app.appendChild(img);
+}
+
+// 来場イベント（ページ表示時）
+gtag('event', 'visit_complete', {
+  set: set
+});
+</script>
+
+</body>
+</html>

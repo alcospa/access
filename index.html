@@ -10,7 +10,7 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-gtag('config', 'G-DYS49TX66K'); // 自分のGA4測定IDに変更済み
+gtag('config', 'G-DYS49TX66K');
 </script>
 
 <title>LP</title>
@@ -35,16 +35,21 @@ img {
 <script>
 // URLパラメータ取得
 const params = new URLSearchParams(location.search);
-const set = params.get("set") || "a"; // デフォルトa
+let set = params.get("set");
+
+// 不正値対策（a～d以外は弾く）
+if (!["a","b","c","d"].includes(set)) {
+  set = "unknown";
+}
 
 // セットごとに画像枚数を設定
-let total;
+let total = 0;
 if(set === "a" || set === "b") total = 14;
 else if(set === "c" || set === "d") total = 13;
 
+// 画像表示
 const app = document.getElementById("app");
 
-// 画像を追加（絶対パス）
 for (let i = 1; i <= total; i++) {
   const img = document.createElement("img");
   img.src = `https://alcospa.github.io/access/img/${set}/${i}.webp`;
@@ -52,12 +57,23 @@ for (let i = 1; i <= total; i++) {
   app.appendChild(img);
 }
 
-// 来場イベント（1秒後に送信）
-setTimeout(() => {
-  gtag('event', 'visit_complete', {
-    conversion_set: set   // ← GA4向けのカスタムパラメータ
-  });
-}, 1000);
+// ==========================
+// 3秒閲覧イベント（重複防止）
+// ==========================
+
+// setごとに1回だけ発火
+if (!localStorage.getItem("sent_" + set)) {
+
+  setTimeout(() => {
+    gtag('event', 'view_3sec', {
+      conversion_set: set
+    });
+
+    localStorage.setItem("sent_" + set, "true");
+
+  }, 3000);
+}
+
 </script>
 
 </body>
